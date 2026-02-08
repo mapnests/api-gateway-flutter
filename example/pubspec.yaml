@@ -14,7 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   dio: ^5.9.0
   flutter_dotenv: ^5.1.0
-  tnmap_flutter_plugin:
+  api_gateway_flutter:
     path: ../
 
 dev_dependencies:
