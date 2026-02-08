@@ -1,310 +1,160 @@
-# TNMaps SDK Documentation (v1.0.0)
+# api-gateway-flutter
+Flutter SDK for integrating API Gateway.
+It automatically generates required security headers and allows you to merge them with your existing HTTP client (Dio, http, Retrofit-style wrappers, etc.).
 
-## API Registration & Authentication
+## Changelog (v1.0.0)
+- Initial Flutter SDK integration
+- Automatic secure header generation
+- Android & iOS support
 
-### Step 1: Register for API Access
+## Onboarding Process
 
-**Endpoint:** `http://192.168.169.58:3030/register`
+1. Send email mentioning all of your package names (com.example.debug, com.example.release etc) and send to `apigw@technonext.com` to get `bind-client-config.json`.
+2. Place `bind-client-config.json` in the **root directory** of your project android & IOS.
 
-- Create an account and register for API access.
 
-### Step 2: Login to Dashboard
-
-**Endpoint:** `http://192.168.169.58:3030/login`
-
-- Use your credentials to log in and manage your projects.
-
-## Project Setup
-
-### Step 1: Create a Project
-
-1. Log in to the TNMaps Dashboard.
-2. Navigate to the dashboard.
-3. Go to the **Projects** section.
-4. Click on **"Create Project"**.
-5. Provide a **Project Name** and **Project Description**.
-6. After project creation, go to the **details section**.
-7. In the **Android Section**, add your **Package Name** and **SHA256 fingerprint**.
-8. Once successfully created, you will receive an **API Key**.
-
-## 🔗 Required Git Repositories
-
-Make sure every team member has access to the following repositories:
-
-- `git@vcs.technonext.com:TechnoNext/common/tn-map/flutter-sdk.git`
-
-> 🔐 **Note:**  
-> These repositories are private. Please ensure you have **SSH access** and valid credentials
-> configured
-> in your Git profile.
-
-### Step 1: Add Dependencies
-
-#### a. Add Flutter Plugin
-
-In your `pubspec.yaml`:
+## Installation
+Add dependencies to your pubspec.yaml:
 
 ```yaml
 dependencies:
-   api_gateway_flutter_sdk:
-      git:
-         url: git@vcs.technonext.com:TechnoNext/common/tn-map/flutter-sdk.git
-         ref: 1.0.16
-```      
+  flutter:
+    sdk: flutter
+  tnmap_flutter_plugin: ^latest
+```
+> 🔹 Always use the latest stable version of `tnmap_flutter_plugin` from pub.dev
 
-### Step 2: Add Dependencies
+Then run:
 
-Add the following dependencies to your `build.gradle` file:
+```sh
+flutter pub get
+```
 
-### : mavenLocal Add Dependencies and applicationId according base on api key.
+## Usage
 
-Add mavenLocal() project base build files. Like below
+```dart
+final headers = await TnmapFlutterPlugin.getHeaders();
+```
+These headers are mandatory and must be sent with every API request.
+
+Example: Call API using Dio (Merged Headers)
+
+```dart
+final sdkHeaders = await TnmapFlutterPlugin.getHeaders();
+
+final mergedHeaders = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  ...sdkHeaders,
+};
+
+final response = await Dio().get(
+'http://example.com/api',
+options: Options(headers: mergedHeaders),
+);
+
+```
+
+Example: Central API Client (Recommended)
+```dart
+class ApiClient {
+  static final Dio _dio = Dio();
+
+  static Future<Response> get(
+      String url, {
+        required Map<String, String> headers,
+      }) {
+    return _dio.get(
+      url,
+      options: Options(headers: headers),
+    );
+  }
+}
+
+```
+
+
+## Project Setup Android
+
+### Root `build.gradle.kts`
+Add the Mapnests `config-loader` plugin.
+
+Plugin: `com.mapnests.config-loader:com.mapnests.config-loader.gradle.plugin:4.0.0`
+
+``` groovy
+buildscript {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.13.1")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.21")
+        classpath("com.mapnests.config-loader:com.mapnests.config-loader.gradle.plugin:4.0.0")
+    }
+}
+```
+
+### Module build.gradle
+
+Set Java and Kotlin compatibility:
 
 ```groovy
-
-allprojects {
-   repositories {
-      google()
-      mavenCentral()
-      ** mavenLocal()**
-   }
+plugins {
+  // other gradle plugins
+  id("com.mapnests.config-loader")
 }
 
-```
-
-```groovy
-   applicationId = "com.example.app"
-```
-
-### Step 4: Add SDK to IOS Project
-
-**go to ios folder && exection commnad**
-**pod install**
-
-### Step 4: open Runner.xcworkspace by xcode
-
-in singing & Capabilities select update your team and bundle identifier
-
-### Step 5: add apiKey and packageName in .env file in asserts folder
-
-```dart
-
-String API_KEY = "";
-String PACKAGE_NAME = "";
-```
-
-### Step 6: run the app with the following command
-
-```bash
-
-**--dart-define=ENV=debug** like
-
-flutter run --dart-define=ENV=debug
-```
-
-
-### Example:
-
-```dart
-
-Future<void> _getGeocode() async {
-   try {
-      String requestJson = jsonEncode({
-         "apiKey": API_KEY,
-         "packageName": PACKAGE_NAME,
-         "q": "Uttara",
-         "language": "en",
-         "limit": 5
-      });
-
-      final result = await TnmapFlutterPlugin.getGeocode(requestJson);
-
-      setState(() {
-         _response = result;
-      });
-   } catch (e) {
-      setState(() {
-         _response = "Error: $e";
-      });
-   }
+compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
-```
-
-### Example: geomap data json sample:
-
-**Request:**
-```dart
-
-String requestJson = jsonEncode({
-   "apiKey": API_KEY,
-   "packageName": PACKAGE_NAME,
-   "q": "Uttara",
-   "language": "en",
-   "limit": 5
-});
-```
-
-**Response:**
-```json
-    {
-   "data": [
-      {
-         "place_id": 318548,
-         "lat": "23.7921765",
-         "lon": "90.4155528",
-         "category": "place",
-         "type": "suburb",
-         "place_rank": 19,
-         "importance": 0.14667666666666662,
-         "addresstype": "suburb",
-         "name": "Gulshan",
-         "display_name": "Gulshan, Dhaka, Dhaka Metropolitan, Dhaka District, Dhaka Division, Bangladesh"
-      }
-   ],
-   "message": "Success",
-   "status": true
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
 }
-
 ```
 
-### Example: geomap data json sample:
+## Project Setup IOS
 
-**Request:**
+1. Drag and drop the `TNApiGetwaySDK.xcframework` into your project’s **Project Navigator** (e.g., into a `Frameworks` group).
+2. Select your project in Xcode → **Target** → **General** tab.
+3. Scroll down to **Frameworks, Libraries, and Embedded Content**.
+4. Click the **+** button → Add `TNApiGetwaySDK.xcframework`.
+5. Set **Embed** to **Embed & Sign**.
 
-```dart
+### Root `add TNApiGetwaySDKConfigFile under your  Info.plist`
 
-String requestJson = jsonEncode({
-   "apiKey": API_KEY,
-   "packageName": PACKAGE_NAME,
-   "q": "Uttara",
-   "language": "en",
-   "limit": 5
-});
+```xml
+
+<dict>
+    <key>TNApiGetwaySDKConfigFile</key>
+    <string>bind-client-config.json</string>
+</dict>
 ```
 
-**Response:**
+## Developer Notes
+- Package name must match the value registered in bind-client-config.json
+- HTTPS is recommended
+- Headers must be fetched before every API call
+- Do not hard-code SDK headers
+## Common Fixes
 
-```json
-    {
-   "data": [
-      {
-         "place_id": 318548,
-         "lat": "23.7921765",
-         "lon": "90.4155528",
-         "category": "place",
-         "type": "suburb",
-         "place_rank": 19,
-         "importance": 0.14667666666666662,
-         "addresstype": "suburb",
-         "name": "Gulshan",
-         "display_name": "Gulshan, Dhaka, Dhaka Metropolitan, Dhaka District, Dhaka Division, Bangladesh"
-      }
-   ],
-   "message": "Success",
-   "status": true
-}
+#401 / Unauthorized 
+- Wrong package name or bundle ID
+- Incorrect bind-client-config.json
+- Config file not found at runtime
 
-```
+#iOS Crash (Simulator / OS mismatch)
+- Rebuild SDK for correct iOS version
+- Clean build folder
 
-### Example: reverse geocode data json sample:
-
-**Request:**
-
-```dart
-
-String requestJson = jsonEncode({
-   "apiKey": API_KEY,
-   "packageName": PACKAGE_NAME,
-   "lat": 23.80631,
-   "lon": 90.41889,
-   "language": "en"
-});
-```
-
-**Response:**
-
-```json
-        {
-   "data": {
-      "place_id": 313095,
-      "lat": "23.806617404029236",
-      "lon": "90.41881019418601",
-      "category": "highway",
-      "type": "residential",
-      "place_rank": 26,
-      "importance": 0.0533433333333333,
-      "addresstype": "road",
-      "name": "Road 11",
-      "display_name": "Road 11, Gulshan, Baridhara, Dhaka, Dhaka Metropolitan, Dhaka District, Dhaka Division, 1229, Bangladesh",
-      "address": {
-         "ISO3166-2-lvl4": "BD-C",
-         "ISO3166-2-lvl5": "BD-13",
-         "borough": "Baridhara",
-         "city": "Dhaka",
-         "country": "Bangladesh",
-         "country_code": "bd",
-         "municipality": "Dhaka Metropolitan",
-         "postcode": "1229",
-         "road": "Road 11",
-         "state": "Dhaka Division",
-         "state_district": "Dhaka District",
-         "suburb": "Gulshan"
-      }
-   },
-   "message": "Success",
-   "status": true
-}
-
-```
-
-## 🔧 Troubleshooting & Common Errors
-
-**Cause:**
-> Failed to transform tnmap.flutter.sdk-1.0.17.aar (com.technonext:tnmap.flutter.sdk:1.0.17) to
-> match attributes {artifactType=android-aar-metadata, org.gradle.category=library,
-> org.gradle.libraryelements=jar, org.gradle.status=release, org.gradle.usage=java-runtime}.
-
-```bash
-  cd android
-    ./gradlew clean
-    ./gradlew build
-    ../gradlew assemble
-  flutter pub get
-```
-
-### ❌ Error: `Invalid publication 'mavenAar': artifact file does not exist`
-**Cause:**  
-The `.aar` file (`mapsdk-release.aar`) is missing from the expected path:
-
-**Solution:**
-
-1. Run:
-   ```bash
-   flutter clean
-   flutter pub get
-   ```
-
-2. Navigate to your plugin's android/ directory and build the AAR:
-   ./gradlew assembleRelease
-
-**Cause:**  
-This error occurs when Flutter’s Git cache for the plugin is out of sync or corrupted, usually due
-to updates on the remote `develop` branch.
-**Solution:**
-
-Remove the cached version of the plugin and fetch it again:
-
-```bash
-  rm -rf ~/.pub-cache/git/flutter-sdk-*
-  flutter pub get
-```
-
-## Notes & Best Practices
-
-- Ensure **API Key** is correctly configured in `DistanceMatrixActivity`.
-- Use a **valid Package Name** & **SHA256 Fingerprint** in the TNMaps dashboard.
+---
 
 ## Support
 
-For any issues or support, contact the **TNMaps team** or refer to the official documentation.
+For issues or feature requests contact us through email: `apigw@technonext.com`
