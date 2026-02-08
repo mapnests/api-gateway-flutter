@@ -53,3 +53,7 @@ macos/build/
 # Others
 .env
 *.log
+
+# Ignore bind client config
+example/android/bind-client-config.json
+example/ios/bind-client-config.json
