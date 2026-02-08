@@ -1,33 +1,21 @@
-//
-//  TNApiGatewayCrypto.h
-//  TNMapSDK
-//
-
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TNApiGatewayCrypto : NSObject
 
-/// Equivalent to nativeGenerateAESKey()
-+ (NSString *)generateAESKey;
++ (NSArray<NSString *> *)tnGenerateECDHKeypair;
++ (NSString *)tnGenerateAESKeyWithServerPublicKey:(NSString *)serverPublicKey
+                                  clientPrivateKey:(NSString *)clientPrivateKey;
++ (NSString *)tnEncryptClientIdentity:(NSString *)payloadJson
+                        aesKeyBase64:(NSString *)aesKeyB64;
++ (NSString *)tnEncryptAESKey:(NSString *)aesKeyBase64
+                 publicKeyPEM:(NSString *)serverPublicKey;
++ (int64_t)tnGetServerTime;
 
-/// Equivalent to nativeMethod()
-+ (NSDictionary<NSString *, NSString *> *)encryptPayloadForHeaders:(NSString *)jsonString
-                                                     publicKeyPEM:(NSString *)publicKeyPEM
-                                                     dataIdentity:(NSString *)dataIdentity
-                                                   clientIdentity:(NSString *)clientIdentity;
-
-/// Equivalent to nativeDataIdentityMethod()
-+ (NSString *)encryptAESKey:(NSString *)aesKeyBase64
-               publicKeyPEM:(NSString *)publicKeyPEM;
-
-/// Equivalent to nativeClientIdentityMethod()
-+ (NSString *)encryptClientPayload:(NSString *)jsonString
-                     aesKeyBase64:(NSString *)aesKeyBase64;
-
-/// Equivalent to nativeGetServerTime()
-+ (NSTimeInterval)fetchServerTime;
+// ⚡ Add these
++ (NSString *)base64Encode:(NSString *)input;
++ (NSString *)base64EncodeData:(NSData *)data;
 
 @end
 
