@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - tnmap_flutter_plugin (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - tnmap_flutter_plugin (from `.symlinks/plugins/tnmap_flutter_plugin/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  tnmap_flutter_plugin:
+    :path: ".symlinks/plugins/tnmap_flutter_plugin/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  tnmap_flutter_plugin: b85f2277c950eadadaf498ebdb08e8acb0bfcace
+
+PODFILE CHECKSUM: a57f30d18f102dd3ce366b1d62a55ecbef2158e5
+
+COCOAPODS: 1.16.2

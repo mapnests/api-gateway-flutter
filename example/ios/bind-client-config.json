@@ -1,0 +1,14 @@
+{
+  "key_id": "602214646966911683",
+  "app_id": "ECDH + AES",
+  "public_key": "TUNvd0JRWURLMlZ1QXlFQTVaTmhVeUhSTVdjeVJsOHRMTE82TVZoZjI3RCtQc3ZVMmp6ZEF1WEpZM2c9",
+  "alg": [
+    "ECDH",
+    "AES-GCM"
+  ],
+  "hash": "SHA-256",
+  "data_identity": "cf-csid",
+  "client_identity": "cf-cid",
+  "key_identifier": "cf-kid",
+  "platform": "x-client-platform"
+}

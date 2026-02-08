@@ -1,0 +1,98 @@
+group = "com.example.tnmap_flutter_plugin"
+version = "1.0.0"
+
+buildscript {
+    ext.kotlin_version = "1.8.22"
+
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.1.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath("com.mapnests.config-loader:com.mapnests.config-loader.gradle.plugin:4.0.0")
+
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "com.mapnests.config-loader"
+
+
+android {
+    namespace = "com.example.tnmap_flutter_plugin"
+
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 21
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+        test.java.srcDirs += "src/test/kotlin"
+    }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen { false }
+                showStandardStreams = true
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation("com.technonext:apigateway.flutter.sdk:1.0.0")
+    implementation("com.google.code.gson:gson:2.13.1")
+
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.mockito:mockito-core:5.0.0")
+}
+
+
+// === AUTO PUBLISH AAR TO MAVEN LOCAL BEFORE BUILD ===
+gradle.projectsEvaluated {
+    preBuild.dependsOn installAarToMavenLocal
+}
+
+task installAarToMavenLocal(type: GradleBuild) {
+    // Adjust to actual plugin directory, not example/
+    def pluginRoot = project.projectDir
+    buildFile = new File(pluginRoot, "install-aar.gradle")
+    tasks = ['publishToMavenLocal']
+}
+

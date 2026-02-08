@@ -1,0 +1,72 @@
+//
+//  .gitignore
+//  TNMapSDKSample
+//
+//  Created by Kazi Md. Saidul on 4/5/25.
+//
+
+# Xcode
+build/
+DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+
+# Swift Package Manager
+.swiftpm/
+.build/
+Packages/
+Package.resolved
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/
+Carthage.build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Archives
+*.xcarchive
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# App Data
+*.moved-aside
+*.xcuserstate
+*.orig
+
+# User-specific files
+*.swp
+*~.nib
+*.bak
+
+# IDE
+.idea/
+*.iml
+
+# XCFrameworks you don't want to commit
+*.xcframework
+
+# SwiftPM Xcode integration
+.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+
+# Output & logs
+*.log
+*.tmp
+
+# Symbol graphs
+*.symbols.json

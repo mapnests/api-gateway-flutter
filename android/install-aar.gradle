@@ -1,0 +1,15 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenAar(MavenPublication) {
+            groupId = 'com.technonext'
+            artifactId = 'apigateway.flutter.sdk'
+            version = '1.0.0'
+            artifact("$rootDir/libs/apiGateway-release.aar")
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}

@@ -1,0 +1,55 @@
+# Flutter
+**/build/
+.dart_tool/
+.packages
+.pub-cache/
+.flutter-plugins
+.flutter-plugins-dependencies
+.melos_tool/
+generated_plugin_registrant.dart
+
+# IntelliJ / Android Studio
+*.iml
+.idea/
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+
+# Mac
+.DS_Store
+
+# Android
+android/.gradle/
+android/app/.cxx/
+android/local.properties
+android/.idea/
+android/build/
+*.keystore
+
+# iOS / macOS
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/.symlinks/
+ios/Pods/
+ios/Podfile.lock
+ios/build/
+ios/Runner.xcworkspace/
+ios/.generated/
+macos/Pods/
+macos/Podfile.lock
+macos/Runner.xcworkspace/
+macos/build/
+
+# Binary artifacts
+*.jar
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Others
+.env
+*.log

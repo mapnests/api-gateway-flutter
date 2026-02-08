@@ -1,0 +1,6 @@
+framework module TNApiGetwaySDK {
+  umbrella header "TNApiGetwaySDK.h"
+  export *
+
+  module * { export * }
+}
