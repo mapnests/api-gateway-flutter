@@ -2,16 +2,16 @@ import Flutter
 import UIKit
 import TNApiGetwaySDK
 
-public class TnmapFlutterPlugin: NSObject, FlutterPlugin {
+public class ApiGatewayFlutterPlugin: NSObject, FlutterPlugin {
 
     private let headerProvider = ApiGatewayHeaderProvider.shared
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(
-            name: "tnmap_flutter_plugin",
+            name: "api_gateway_flutter",
             binaryMessenger: registrar.messenger()
         )
-        let instance = TnmapFlutterPlugin()
+        let instance = ApiGatewayFlutterPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
@@ -30,3 +30,4 @@ public class TnmapFlutterPlugin: NSObject, FlutterPlugin {
         result(headers)
     }
 }
+

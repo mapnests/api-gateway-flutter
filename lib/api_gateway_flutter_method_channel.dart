@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'tnmap_flutter_plugin_platform_interface.dart';
 
-/// An implementation of [TnmapFlutterPluginPlatform] that uses method channels.
-class MethodChannelTnmapFlutterPlugin extends TnmapFlutterPluginPlatform {
+import 'api_gateway_flutter_platform_interface.dart';
+
+/// An implementation of [ApiGatewayFlutterPlatform] that uses method channels.
+class MethodChannelApiGatewayFlutter extends ApiGatewayFlutterPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('tnmap_flutter_plugin');
+  final methodChannel = const MethodChannel('api_gateway_flutter');
 
   @override
   Future<Map<String, String>> getHeaders() async {

@@ -1,2 +1,3 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tnmap_flutter_plugin"></manifest>
+  package="com.example.api_gateway_flutter">
+</manifest>

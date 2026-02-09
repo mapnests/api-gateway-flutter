@@ -1,4 +1,4 @@
-package com.example.tnmap_flutter_plugin
+package com.example.api_gateway_flutter
 
 import android.content.Context
 import androidx.annotation.NonNull
@@ -7,14 +7,15 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
-class TnmapFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
+/** ApiGatewayFlutterPlugin */
+class ApiGatewayFlutterPlugin: FlutterPlugin, MethodChannel.MethodCallHandler {
 
     private lateinit var channel: MethodChannel
     private lateinit var context: Context
     private lateinit var headerProvider: ApiGatewayHeaderProvider
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "tnmap_flutter_plugin")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "api_gateway_flutter")
         channel.setMethodCallHandler(this)
         context = flutterPluginBinding.applicationContext
 

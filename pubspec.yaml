@@ -1,10 +1,10 @@
 name: api_gateway_flutter
 description: A Flutter SDK for API gateway integration.
-version: 1.0.0+1
+version: 2.0.0+2
 homepage: https://mapnests.com
 
 environment:
-  sdk: ^3.5.4
+  sdk: ^3.8.1
   flutter: '>=3.3.0'
 
 dependencies:
@@ -17,13 +17,11 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^5.0.0
 
-
-# The following section is specific to Flutter packages.
 flutter:
   plugin:
     platforms:
       android:
-        package: com.example.tnmap_flutter_plugin
-        pluginClass: TnmapFlutterPlugin
+        package: com.example.api_gateway_flutter
+        pluginClass: ApiGatewayFlutterPlugin
       ios:
-        pluginClass: TnmapFlutterPlugin
+        pluginClass: ApiGatewayFlutterPlugin

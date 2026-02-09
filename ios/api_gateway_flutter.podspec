@@ -1,10 +1,10 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint tnmap_flutter_plugin.podspec` to validate before publishing.
+# Run `pod lib lint api_gateway_flutter.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'tnmap_flutter_plugin'
-  s.version          = '0.0.1'
+  s.name             = 'api_gateway_flutter'
+  s.version          = '1.0.0'
   s.summary          = 'A new Flutter plugin project.'
   s.description      = <<-DESC
 A new Flutter plugin project.
@@ -29,5 +29,5 @@ A new Flutter plugin project.
   # required reason APIs, update the PrivacyInfo.xcprivacy file to describe your
   # plugin's privacy impact, and then uncomment this line. For more information,
   # see https://developer.apple.com/documentation/bundleresources/privacy_manifest_files
-  # s.resource_bundles = {'tnmap_flutter_plugin_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
+  # s.resource_bundles = {'api_gateway_flutter_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
 end

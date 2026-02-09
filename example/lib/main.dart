@@ -1,16 +1,13 @@
 import 'dart:convert';
 
+import 'package:api_gateway_flutter/api_gateway_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:tnmap_flutter_plugin/tnmap_flutter_plugin.dart';
-
 import 'logger.dart';
 import 'network/api_client.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: 'assets/.env');
   runApp(const MyApp());
 }
 
@@ -65,7 +62,7 @@ class _HomePageState extends State<HomePage>
     _setLoading(true);
     Logger.d('HomePage', 'Fetching SDK headers...');
     try {
-      headers = await TnmapFlutterPlugin.getHeaders();
+      headers = await ApiGatewayFlutter.getHeaders();
       Logger.i('HomePage', 'Headers fetched: ${headers.toString()}');
       _tabController.animateTo(0);
     } catch (e) {
@@ -80,7 +77,7 @@ class _HomePageState extends State<HomePage>
     _setLoading(true);
     Logger.d('HomePage', 'Calling API: $apiUrl');
     try {
-      final sdkHeaders = await TnmapFlutterPlugin.getHeaders();
+      final sdkHeaders = await ApiGatewayFlutter.getHeaders();
       Logger.d('HomePage', 'SDK Headers: ${sdkHeaders.toString()}');
 
       final mergedHeaders = {

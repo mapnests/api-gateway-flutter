@@ -2,6 +2,11 @@
 Flutter SDK for integrating API Gateway.
 It automatically generates required security headers and allows you to merge them with your existing HTTP client (Dio, http, Retrofit-style wrappers, etc.).
 
+## 2.0.0+2
+
+* API Gateway Flutter SDK 2.0.0
+* Update .Arr file and .xcframework file
+
 ## Changelog (v1.0.0)
 - Initial Flutter SDK integration
 - Automatic secure header generation
@@ -96,16 +101,59 @@ buildscript {
     }
 }
 ```
+or 
+
+```kotlin
+
+pluginManagement {
+    val flutterSdkPath = run {
+        val properties = java.util.Properties()
+        file("local.properties").inputStream().use { properties.load(it) }
+        val flutterSdkPath = properties.getProperty("flutter.sdk")
+        require(flutterSdkPath != null) { "flutter.sdk not set in local.properties" }
+        flutterSdkPath
+    }
+
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id("dev.flutter.flutter-plugin-loader") version "1.0.0"
+    id("com.android.application") version "8.7.3" apply false
+    id("org.jetbrains.kotlin.android") version "2.1.0" apply false
+    id("com.mapnests.config-loader") version "4.0.0" apply false
+}
+
+include(":app")
+
+```
+
+
+
 
 ### Module build.gradle
 
-Set Java and Kotlin compatibility:
+Set Java and Kotlin compatibility, minSdk, applicationId and compileOptions.
+
 
 ```groovy
 plugins {
   // other gradle plugins
   id("com.mapnests.config-loader")
 }
+
+defaultConfig {
+    applicationId = "com.example.api_gateway_flutter_example"
+    minSdk = 24
+}
+
 
 compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
